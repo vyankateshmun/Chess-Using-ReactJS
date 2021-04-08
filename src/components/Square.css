@@ -1,3 +1,25 @@
+.square {
+    display: grid;
+    place-content: center;
+    width: 60px;
+    height: 60px;
+}
+
+.square .piece {
+    width: 60px;
+    height: 60px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 55px;
+}
+
+.square .piece:hover {
+    cursor: grab;
+}
+
+.square .piece:active {
+    cursor: grabbing;
+}
 .white-square {
     background-color: #ebecda;
 }
