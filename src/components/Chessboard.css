@@ -1,8 +1,9 @@
 .board {
-    background-color: #0f9120a1;
+    background-color: #066121de;
+    display: grid;
     width: 480px;
     height: 480px;
-    display: grid;
     grid-template-columns: repeat(8, 60px);
     grid-template-rows: repeat(8, 60px);
+    place-content: center;
 }
