@@ -2,301 +2,15 @@ import React , {useState} from 'react'
 import './Chessboard.css'
 import Square from './Square'
 import Chess from 'chess.js'
+import 'font-awesome/css/font-awesome.min.css';
+import initPos from './Constants'
 const VERTICAL_AXIS = ["1", "2", "3", "4", "5", "6", "7", "8"];
 const HORIZONTAL_AXIS = ["a", "b", "c", "d", "e", "f", "g", "h"];
-const chess = new Chess();
+
+let chess = new Chess();
 function Chessboard() {
-    const [pieces, setPieces] = useState([
-        {
-          image : `assets/images/rb.png`,
-          position : {
-            x: 0,
-            y: 7,
-          },
-          type : "r",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/nb.png`,
-          position: {
-            x: 1,
-            y: 7,
-          },
-          type: "n",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/bb.png`,
-          position: {
-            x: 2,
-            y: 7,
-          },
-          type: "b",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/qb.png`,
-          position: {
-            x: 3,
-            y: 7,
-          },
-          type: "q",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/kb.png`,
-          position: {
-            x: 4,
-            y: 7,
-          },
-          type: "k",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/bb.png`,
-          position: {
-            x: 5,
-            y: 7,
-          },
-          type: "b",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/nb.png`,
-          position: {
-            x: 6,
-            y: 7,
-          },
-          type: "n",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/rb.png`,
-          position: {
-            x: 7,
-            y: 7,
-          },
-          type: "r",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 0,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 1,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 2,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 3,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 4,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 5,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 6,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-        {
-          image: `assets/images/pb.png`,
-          position: {
-            x: 7,
-            y: 6,
-          },
-          type : "p",
-          colour : "BLACK",
-        },
-      
-        {
-          image: `assets/images/rw.png`,
-          position: {
-            x: 0,
-            y: 0,
-          },
-          type: "r",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/nw.png`,
-          position: {
-            x: 1,
-            y: 0,
-          },
-          type: "n",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/bw.png`,
-          position: {
-            x: 2,
-            y: 0,
-          },
-          type: "b",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/qw.png`,
-          position: {
-            x: 3,
-            y: 0,
-          },
-          type: "q",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/kw.png`,
-          position: {
-            x: 4,
-            y: 0,
-          },
-          type: "k",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/bw.png`,
-          position: {
-            x: 5,
-            y: 0,
-          },
-          type: "b",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/nw.png`,
-          position: {
-            x: 6,
-            y: 0,
-          },
-          type: "n",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/rw.png`,
-          position: {
-            x: 7,
-            y: 0,
-          },
-          type: "r",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 0,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 1,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 2,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 3,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 4,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 5,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 6,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        },
-        {
-          image: `assets/images/pw.png`,
-          position: {
-            x: 7,
-            y: 1,
-          },
-          type : "p",
-          colour : "WHITE",
-        }
-    ]);
+    const pos = JSON.parse(JSON.stringify(initPos));
+    const [pieces, setPieces] = useState(pos);
     const [activePiece, setActivePiece] = useState(null);
     const [currentPiece, setCurrentPiece] = useState(null);
     const [currentPlayer, setCurrentPlayer] = useState("WHITE");
@@ -440,6 +154,11 @@ function Chessboard() {
       currentPiece1 = pieces.find((p) => (p.position.x === x && p.position.y === y));
       return currentPiece1;
     }
+    function newGame(e){
+      e.preventDefault();
+      setPieces(pos);
+      chess = new Chess();
+    }
     let board=[];
     for(let i=VERTICAL_AXIS.length-1;i>=0;i--){
         for(let j=0;j<HORIZONTAL_AXIS.length;j++){
@@ -450,12 +169,23 @@ function Chessboard() {
         }
     }
     return (
-      <div
-          onMouseMove={(e) => movePiece(e)}
-          onMouseDown={(e) => grabPiece(e)}
-          onMouseUp={(e) => dropPiece(e)}
-          className="board"
-        >{board}
+      <div className="cent">
+        <div className="left">
+          <button className="button red" onClick={newGame}>New Game
+            <i className="fa fa-undo" aria-hidden="true"> </i>
+          </button>
+        </div>
+        <div className="center">
+        <div
+            onMouseMove={(e) => movePiece(e)}
+            onMouseDown={(e) => grabPiece(e)}
+            onMouseUp={(e) => dropPiece(e)}
+            className="board"
+          >{board}
+        </div>
+        </div>
+        <div className="right">
+        </div>
       </div>
     )
 }
