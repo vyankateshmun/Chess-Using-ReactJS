@@ -14,6 +14,7 @@ function Chessboard() {
     const [activePiece, setActivePiece] = useState(null);
     const [currentPiece, setCurrentPiece] = useState(null);
     const [currentPlayer, setCurrentPlayer] = useState("WHITE");
+    const [validMoves, setValidMoves] = useState(null);
     function grabPiece(e){
       const element = e.target;
       let currentPiece1 = pieceAtPos(e.clientX,e.clientY);
@@ -28,7 +29,40 @@ function Chessboard() {
         element.style.top = `${y}px`;
         setCurrentPiece(currentPiece1);
         setActivePiece(element);
+        highlight_moves(currentPiece1.position.x,currentPiece1.position.y);
       }
+    }
+    function highlight_moves(x,y){
+      const pos = `${HORIZONTAL_AXIS[x]}${VERTICAL_AXIS[y]}`
+      const moves = chess.moves({square: pos })
+      console.log(moves);
+      const valmoves = [{position : {x: -1,y: -1}}]
+      for (const move in moves){
+        const str = moves[move];
+        let len = str.length;
+        if(str==='O-O'){
+          if(currentPlayer==='WHITE')
+            valmoves.push({position : {x : 6,y: 0}});
+          else
+            valmoves.push({position : {x : 6,y: 7}});
+          continue;
+        }
+        if(str==='O-O-O'){
+          if(currentPlayer==='WHITE')
+            valmoves.push({position : {x : 2,y: 0}});
+          else
+            valmoves.push({position : {x : 2,y: 7}});
+          continue;
+        }
+        if(str[len-1]==='+')
+          len=len-1;
+        let y1 = str.charAt(len-1);
+        y1 = parseInt(y1);
+        let x1 = str.charAt(len-2);
+        x1 = x1.charCodeAt(0) - 97;
+        valmoves.push({position : {x : x1,y: y1-1}});
+      }
+      setValidMoves(valmoves);  
     }
     function movePiece(e){
       if (activePiece){
@@ -112,6 +146,7 @@ function Chessboard() {
             setPieces(updatedPieces);
             setCurrentPiece(null);
             setActivePiece(null);
+            setValidMoves(null);
             if(chess.game_over()){
               if(chess.in_checkmate())
                 alert(`Game Won by ${currentPlayer}`);
@@ -141,9 +176,9 @@ function Chessboard() {
         setActivePiece(null);
       }
       if(currentPiece)
-      {
         setCurrentPiece(null);
-      }
+      if(validMoves!=null)
+        setValidMoves(null);
     }
     function pieceAtPos(xpos,ypos){
       let xorg=Math.floor(window.innerWidth/2)-240;
@@ -163,9 +198,15 @@ function Chessboard() {
     for(let i=VERTICAL_AXIS.length-1;i>=0;i--){
         for(let j=0;j<HORIZONTAL_AXIS.length;j++){
             const piece = pieces.find( p => (p.position.x === j && p.position.y === i));
+            let move=null;
+            if(validMoves)
+            {
+              move = validMoves.find(p => (p.position.x === j && p.position.y === i));
+            }
+            let correct = move ? true : false;
             let image = piece ? piece.image : undefined;
             const sum=i+j;
-            board.push(<Square key={`${j},${i}`} value={sum} image={image}/>);
+            board.push(<Square key={`${j},${i}`} value={sum} image={image} correct={correct}/>);
         }
     }
     return (
